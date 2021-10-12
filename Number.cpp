@@ -21,10 +21,10 @@ namespace Prog3 {
 			throw std::logic_error("Too much digits");
 		long number = ByLong;
 		if (ByLong < 0) {
-			value[0] = 1 + '0';
+			value[0] = '1';
 			number = ByLong * (-1);
 		}
-		else value[0] = 0 + '0';
+		else value[0] = '0';
 		for (int i = 20; i > 0; i--) {
 			value[i] = (number % 2)+'0';
 			number = number / 2;
@@ -77,7 +77,8 @@ namespace Prog3 {
 			}
 		}
 		if (array[0] == '1') {
-			for (int i = 0; i < 21; i++) {
+			Code.Additional[0] = '1';
+			for (int i = 1; i < 21; i++) { // меняем цифры кроме знака
 				if (array[i] == '0')
 					Code.Additional[i] = '1';
 				if (array[i] == '1') {
@@ -85,7 +86,7 @@ namespace Prog3 {
 				}
 			}
 			for (int i = 21; i > 0; i--) {
-				if (Code.Additional[i] == '0') {
+				if (Code.Additional[i] == '0') { // до первого нуля
 					Code.Additional[i] = '1';
 					break;
 				}
@@ -95,25 +96,15 @@ namespace Prog3 {
 			}
 		}
 		Code.Additional[21] = '\0';
-		int i = 0;
-		do {
-			std::cout << Code.Additional[i];
-			i++;
-		} while (i < 21);
 		return Code;
 	}
 
 
-	void Number::AdditionalCode() const { // return the focal length
+	 AdditionalCodeValue Number::AdditionalCode() {
 		struct AdditionalCodeValue Code = {};
-		MakeAdditionalFromStraight(value, Code);
-		int i = 0;
-		std::cout << std::endl;
-		do {
-			std::cout << Code.Additional[i];
-			i++;
-		} while (i < 21);
-		std::cout << std::endl;
+		char helper[22];
+		Code = MakeAdditionalFromStraight(value, Code);
+		return Code;
 	}
 
 	int CountDigits(long i) {
@@ -125,6 +116,61 @@ namespace Prog3 {
 			k = k++;
 		}
 		return k;
+	}
+
+	AdditionalCodeValue Number::Operation(long operatnum) { // сумма и разность.
+		struct AdditionalCodeValue MyCode = {};
+		struct AdditionalCodeValue OperationCode = {};
+		struct AdditionalCodeValue SumCode = {};
+		char helper[22];
+		int k = 0;
+		if (CountDigits(operatnum) > 7)
+			throw std::logic_error("Too much digits");
+
+		long number = operatnum;
+		if (operatnum < 0) {
+			helper[0] = '1';
+			number = operatnum * (-1);
+		}
+		else helper[0] = '0';
+		for (int i = 20; i > 0; i--) {
+			helper[i] = (number % 2) + '0';
+			number = number / 2;
+		}
+		helper[21] = '\0';
+		MyCode = MakeAdditionalFromStraight(value, MyCode);
+		OperationCode = MakeAdditionalFromStraight(helper, OperationCode);
+		std::cout << std::endl << MyCode.Additional << std::endl;
+		std::cout << std::endl << OperationCode.Additional << std::endl;
+
+		for (int i = 21; i > -1; i--) {
+			if (MyCode.Additional[i] == '0' && OperationCode.Additional[i] == '0' && k == 0) {
+				SumCode.Additional[i] = '0';
+			}
+			else if (MyCode.Additional[i] =='0' && OperationCode.Additional[i] == '0' && k != 0) {
+				SumCode.Additional[i] = '1';
+				k--;
+			}
+			else if (MyCode.Additional[i] =='1' && OperationCode.Additional[i] == '1' && k == 0) {
+				SumCode.Additional[i] = '0';
+				k++;}
+			else if (MyCode.Additional[i] == '1' && OperationCode.Additional[i] == '1' && k != 0) {
+				SumCode.Additional[i] = '1';
+			}
+			else if (MyCode.Additional[i] == '1' && OperationCode.Additional[i] == '0' && k == 0) {
+				SumCode.Additional[i] = '1';
+			}
+			else if (MyCode.Additional[i] == '1' && OperationCode.Additional[i] == '0' && k != 0) {
+				SumCode.Additional[i] = '0';
+			}
+			else if (MyCode.Additional[i] == '0' && OperationCode.Additional[i] == '1' && k == 0) {
+				SumCode.Additional[i] = '1';
+			}
+			else if (MyCode.Additional[i] == '1' && OperationCode.Additional[i] == '0' && k != 0) {
+				SumCode.Additional[i] = '0';	
+			}
+		}
+		return SumCode;
 	}
 }
 

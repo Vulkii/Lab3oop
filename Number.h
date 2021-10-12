@@ -10,7 +10,7 @@
 namespace Prog3 {
 
     struct AdditionalCodeValue {
-        char Additional[21];
+        char Additional[22];
     };
 
 
@@ -70,10 +70,10 @@ namespace Prog3 {
 
         // Getters
         const char *GetChar();
+
         // Methods
-
-        void AdditionalCode() const;
-
+        AdditionalCodeValue AdditionalCode();
+        AdditionalCodeValue Operation(long operatnum);
 
         // Destructor
         ~Number() {
