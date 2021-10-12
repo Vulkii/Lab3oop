@@ -10,7 +10,7 @@
 namespace Prog3 {
 
     struct AdditionalCodeValue {
-        char Additional[31];
+        char Additional[21];
     };
 
 
@@ -48,17 +48,20 @@ namespace Prog3 {
 
     }
 
+    int CountDigits(long i);
+
     class Number {
     private:
-        char value[31];
+        char value[22];
 
 
     public:
         // Constructors
         Number() {
-            for (int i = 0; i < 31; i++) {
+            for (int i = 0; i < 21; i++) {
                 value[i] = 0+'0';
         }
+            value[21] = '\0';
         }; // empty constructor
 
         // Setters
@@ -66,7 +69,7 @@ namespace Prog3 {
         Number& SetByChar(char* ByChar);
 
         // Getters
-        void GetChar();
+        const char *GetChar();
         // Methods
 
         void AdditionalCode() const;
