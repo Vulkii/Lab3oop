@@ -26,6 +26,7 @@ TEST(Constructor, Setters) // Checking setter by long and by char
 	ASSERT_ANY_THROW(num1.SetByChar("asd"));
 	ASSERT_ANY_THROW(num1.SetByChar("-asd"));
 	ASSERT_ANY_THROW(num1.SetByChar("1112a11"));
+	ASSERT_ANY_THROW(num1.SetByChar("1112a11111asdasa"));
 	ASSERT_ANY_THROW(num1.SetByChar("b11"));
 	ASSERT_ANY_THROW(num1.SetByChar("11d"));
 	ASSERT_ANY_THROW(num1.SetByChar("-1a1"));
@@ -74,4 +75,24 @@ TEST(Constructor, Multiply) // Checking multiplier
 	ASSERT_EQ(200, num1.Multiplication());
 	num1.SetByLong(-20);
 	ASSERT_EQ(-200, num1.Multiplication());
+}
+
+
+TEST(Constructor, OverLoadTest) // Checking overload +
+{
+	Number num1,num2;
+	int res;
+	num1.SetByLong(0);
+	num2.SetByLong(15);
+	res = num1 + num2;
+	ASSERT_EQ(15, res);
+	num1.SetByLong(-20);
+	res = num1 + num2;
+	ASSERT_EQ(-5, res);
+	num1.SetByLong(15);
+	res = num1 + num2;
+	ASSERT_EQ(30, res);
+	num1.SetByLong(454);
+	res = num1 + num2;
+	ASSERT_EQ(454+15, res);
 }

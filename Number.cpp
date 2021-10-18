@@ -1,8 +1,3 @@
-
-
-/*
-*/
-
 #define _USE_MATH_DEFINES
 #include <iostream>
 #include <cmath>
@@ -34,6 +29,9 @@ namespace Prog3 {
 	}
 	Number& Number::SetByChar(char *ByChar) { 
 		int len=strlen(ByChar);
+		if (len > 7) {
+			throw std::logic_error("Incorrect string!");
+		}
 		int number=0, k = 0;
 		int i = 0;
 		if (ByChar[0] == '-') {
@@ -66,10 +64,10 @@ namespace Prog3 {
 
 	const char *Number::GetChar() {
 		int result = 0;
-		int j = 0;
+		int degree_of_two = 0;
 			for (int i = 20; i > 0; i--) {
-				result = result + ((value[i] - '0') * pow(2, j));
-				j++;
+				result = result + ((value[i] - '0') * pow(2, degree_of_two));
+				degree_of_two++;
 			}
 			if (value[0] == '1')
 				result = result * (-1);
@@ -112,21 +110,21 @@ namespace Prog3 {
 	 AdditionalCodeValue Number::AdditionalCode() {
 		struct AdditionalCodeValue Code = {};
 		int result = 0;
-		int j = 0;
+		int degree_of_two = 0;
 		Code = MakeAdditionalFromStraight(value, Code);
 		if (Code.Additional[0] != '1') {
 			for (int i = 20; i > 0; i--) {
-				result = result + ((Code.Additional[i] - '0') * pow(2, j));
-				j++;
+				result = result + ((Code.Additional[i] - '0') * pow(2, degree_of_two));
+				degree_of_two++;
 			}
 		}
 		else if (Code.Additional[0] == '1') {
 			result = -1;
 			for (int i = 20; i > 0; i--) {
 				if (Code.Additional[i] == '0') {
-					result = result - (1 * pow(2, j));
+					result = result - (1 * pow(2, degree_of_two));
 				}
-				j++;
+				degree_of_two++;
 			}
 		}
 		std::cout <<"Additional code for "<< result << " is "<<std::endl;
@@ -134,7 +132,7 @@ namespace Prog3 {
 	}
 
 	int CountDigits(long i) {
-		int k = 0;
+		int k = 0; // Number of digits
 		if (i < 0)
 			i = i * -1;
 		while (i>0){
@@ -150,8 +148,8 @@ namespace Prog3 {
 		struct AdditionalCodeValue SumCode = {};
 		char helper[22];
 		int result = 0;
-		int j = 0;
-		int k = 0;
+		int degree_of_two = 0;
+		int k = 0; // How many '1' "in mind" = how many 1 we need to use.
 		if (CountDigits(operatnum) > 7)
 			throw std::logic_error("Too much digits");
 
@@ -201,17 +199,17 @@ namespace Prog3 {
 		}
 		if (SumCode.Additional[0] != '1') {
 			for (int i = 20; i > 0; i--) {
-				result = result + ((SumCode.Additional[i] - '0') * pow(2, j));
-				j++;
+				result = result + ((SumCode.Additional[i] - '0') * pow(2, degree_of_two));
+				degree_of_two++;
 			}
 		}
 		else if (SumCode.Additional[0] == '1') {
 			result = -1;
 			for (int i = 20; i > 0; i--) {
 				if (SumCode.Additional[i] == '0') {
-					result = result - (1 * pow(2, j));
+					result = result - (1 * pow(2, degree_of_two));
 				}
-				j++;
+				degree_of_two++;
 			}
 		}
 		return result;
@@ -269,14 +267,29 @@ namespace Prog3 {
 			}
 		}
 		int result = 0;
-		int j = 0;
+		int degree_of_two = 0;
 		for (int i = 20; i > 0; i--) {
-			result = result + ((res[i] - '0') * pow(2, j));
-			j++;
+			result = result + ((res[i] - '0') * pow(2, degree_of_two));
+			degree_of_two++;
 		}
 		if (value[0] == '1')
 			result = result * (-1);
 		return result;
 	}
+
+	int & Number::operator +(const Number &r){
+		int result = 0;
+		int res = 0;
+		int degree_of_two = 0;
+		for (int i = 20; i > 0; i--) {
+			result = result + ((r.value[i] - '0') * pow(2, degree_of_two));
+			degree_of_two++;
+		}
+		if (r.value[0] == '1')
+			result = result * (-1);
+		result=this->Addition(result);
+		return result;
+	}
+
 }
 

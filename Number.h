@@ -40,6 +40,9 @@ namespace Prog3 {
         AdditionalCodeValue AdditionalCode();
         int Addition(long operatnum);
         int Multiplication();
+
+        int & operator +(const Number &r);
+
         // Destructor
         ~Number() {
             std::cout << "Destructor called for Number" << std::endl;
