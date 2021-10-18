@@ -65,6 +65,15 @@ namespace Prog3 {
 	}
 
 	const char *Number::GetChar() {
+		int result = 0;
+		int j = 0;
+			for (int i = 20; i > 0; i--) {
+				result = result + ((value[i] - '0') * pow(2, j));
+				j++;
+			}
+			if (value[0] == '1')
+				result = result * (-1);
+		std::cout << "Straight code for " << result << " is" << std::endl;
 		return value;
 	}
 
@@ -102,8 +111,25 @@ namespace Prog3 {
 
 	 AdditionalCodeValue Number::AdditionalCode() {
 		struct AdditionalCodeValue Code = {};
-		char helper[22];
+		int result = 0;
+		int j = 0;
 		Code = MakeAdditionalFromStraight(value, Code);
+		if (Code.Additional[0] != '1') {
+			for (int i = 20; i > 0; i--) {
+				result = result + ((Code.Additional[i] - '0') * pow(2, j));
+				j++;
+			}
+		}
+		else if (Code.Additional[0] == '1') {
+			result = -1;
+			for (int i = 20; i > 0; i--) {
+				if (Code.Additional[i] == '0') {
+					result = result - (1 * pow(2, j));
+				}
+				j++;
+			}
+		}
+		std::cout <<"Additional code for "<< result << " is "<<std::endl;
 		return Code;
 	}
 
@@ -118,11 +144,13 @@ namespace Prog3 {
 		return k;
 	}
 
-	AdditionalCodeValue Number::Operation(long operatnum) { // сумма и разность.
+	int Number::Addition(long operatnum) { // сумма и разность.
 		struct AdditionalCodeValue MyCode = {};
 		struct AdditionalCodeValue OperationCode = {};
 		struct AdditionalCodeValue SumCode = {};
 		char helper[22];
+		int result = 0;
+		int j = 0;
 		int k = 0;
 		if (CountDigits(operatnum) > 7)
 			throw std::logic_error("Too much digits");
@@ -140,8 +168,8 @@ namespace Prog3 {
 		helper[21] = '\0';
 		MyCode = MakeAdditionalFromStraight(value, MyCode);
 		OperationCode = MakeAdditionalFromStraight(helper, OperationCode);
-		std::cout << std::endl << MyCode.Additional << std::endl;
-		std::cout << std::endl << OperationCode.Additional << std::endl;
+		SumCode = MakeAdditionalFromStraight(value, SumCode);
+
 
 		for (int i = 21; i > -1; i--) {
 			if (MyCode.Additional[i] == '0' && OperationCode.Additional[i] == '0' && k == 0) {
@@ -153,7 +181,8 @@ namespace Prog3 {
 			}
 			else if (MyCode.Additional[i] =='1' && OperationCode.Additional[i] == '1' && k == 0) {
 				SumCode.Additional[i] = '0';
-				k++;}
+				k++;
+			}
 			else if (MyCode.Additional[i] == '1' && OperationCode.Additional[i] == '1' && k != 0) {
 				SumCode.Additional[i] = '1';
 			}
@@ -170,7 +199,84 @@ namespace Prog3 {
 				SumCode.Additional[i] = '0';	
 			}
 		}
-		return SumCode;
+		if (SumCode.Additional[0] != '1') {
+			for (int i = 20; i > 0; i--) {
+				result = result + ((SumCode.Additional[i] - '0') * pow(2, j));
+				j++;
+			}
+		}
+		else if (SumCode.Additional[0] == '1') {
+			result = -1;
+			for (int i = 20; i > 0; i--) {
+				if (SumCode.Additional[i] == '0') {
+					result = result - (1 * pow(2, j));
+				}
+				j++;
+			}
+		}
+		return result;
+	}
+
+
+	int Number::Multiplication() {
+		char helper[22];
+		char superhelper[22];
+		char res[22];
+		int k = 0;
+		for (int i = 0; i < 21; i++) {
+			res[i] = '0';
+			helper[i] = '0';
+			superhelper[i] = '0';
+		}
+		res[21] = '\0';
+		helper[21] = '\0';
+		superhelper[21] = '\0';
+
+
+		for (int i = 20; i > 3; i--) {
+			helper[i - 1] = value[i];
+			superhelper[i - 3] = value[i];
+		}
+		for (int i = 0; i < 21; i++) {
+			res[i] = '0';
+		}
+		for (int i = 21; i > -1; i--) {
+			if (helper[i] == '0' && superhelper[i] == '0' && k == 0) {
+				res[i] = '0';
+			}
+			else if (helper[i] == '0' && superhelper[i] == '0' && k != 0) {
+				res[i] = '1';
+				k--;
+			}
+			else if (helper[i] == '1' && superhelper[i] == '1' && k == 0) {
+				res[i] = '0';
+				k++;
+			}
+			else if (helper[i] == '1' && superhelper[i] == '1' && k != 0) {
+				res[i] = '1';
+			}
+			else if (helper[i] == '1' && superhelper[i] == '0' && k == 0) {
+				res[i] = '1';
+			}
+			else if (helper[i] == '1' && superhelper[i] == '0' && k != 0) {
+				res[i] = '0';
+			}
+			else if (helper[i] == '0' && superhelper[i] == '1' && k == 0) {
+				res[i] = '1';
+			}
+			else if (helper[i] == '1' && superhelper[i] == '0' && k != 0) {
+				res[i] = '0';
+			}
+		}
+		int result = 0;
+		int j = 0;
+		for (int i = 20; i > 0; i--) {
+			result = result + ((res[i] - '0') * pow(2, j));
+			j++;
+		}
+		if (value[0] == '1')
+			result = result * (-1);
+		return result;
 	}
 }
 

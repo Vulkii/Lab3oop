@@ -10,9 +10,13 @@ int main(){
     int choice = -1;
 	char number[10]; // Сами цифры в числе.
 	long initnumber; // Число не чаром
+	long operationnumber;
 	Number num1;
+	int result;
+	struct AdditionalCodeValue Code = {};
 	do{
-		if (get(choice, -1, "\n0.Exit\n1.Enter by long number\n2.Enter by char\n3.Get value in Additional Code\n") < 0){
+		if (get(choice, -1, "\n0.Exit\n1.Enter by long number\n2.Enter by char\n3.Get value in straight Code\n4.Get value in additional code\n"
+			"5.Get sum of two numbers\n6.Get multiplication of your number and 10.\n") < 0){
 		}
 		switch (choice){
 		case 1:
@@ -30,7 +34,21 @@ int main(){
 			std::cout << num1.GetChar()<<std::endl;
 			break;
 		case 4:
-			num1.AdditionalCode();
+			Code = num1.AdditionalCode();
+			for (int i = 0; i < 22; i++) {
+				std::cout << Code.Additional[i];
+			}
+			break;
+		case 5:
+			std::cout << "Enter long number which you want to sum" << std::endl;
+			if (!getNum(operationnumber))
+				return -1;
+			result = num1.Addition(operationnumber);
+			std::cout << "Result of sum equals " << result << std::endl;
+			break;
+		case 6:
+			std::cout << num1.Multiplication() << std::endl;
+			break;
 		}
 	} while (choice != 0);
 }

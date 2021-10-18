@@ -53,13 +53,14 @@ namespace Prog3 {
     class Number {
     private:
         char value[22];
+        
 
 
     public:
         // Constructors
         Number() {
             for (int i = 0; i < 21; i++) {
-                value[i] = 0+'0';
+                value[i] = '0';
         }
             value[21] = '\0';
         }; // empty constructor
@@ -73,8 +74,8 @@ namespace Prog3 {
 
         // Methods
         AdditionalCodeValue AdditionalCode();
-        AdditionalCodeValue Operation(long operatnum);
-
+        int Addition(long operatnum);
+        int Multiplication();
         // Destructor
         ~Number() {
             std::cout << "Destructor called for Number" << std::endl;

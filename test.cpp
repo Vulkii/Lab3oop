@@ -34,7 +34,7 @@ TEST(Constructor, Setters) // Checking setter by long and by char
 }
 
 
-TEST(Constructor, Getter) // Checking getter
+TEST(Constructor, Getter) // Checking getter and good setters
 {
 	Number num1;
 	num1.SetByLong(12345);
@@ -45,4 +45,33 @@ TEST(Constructor, Getter) // Checking getter
 	ASSERT_STREQ("100000011000000111001", num1.GetChar());
 	num1.SetByChar("-12345");
 	ASSERT_STREQ("100000011000000111001", num1.GetChar());
+}
+
+
+
+
+TEST(Constructor, Sum) // Checking sum of two digits
+{
+	Number num1;
+	num1.SetByLong(12);
+	ASSERT_EQ(24, num1.Addition(12));
+	ASSERT_EQ(0, num1.Addition(-12));
+	ASSERT_EQ(26, num1.Addition(14));
+	ASSERT_EQ(134, num1.Addition(122));
+	ASSERT_EQ(7, num1.Addition(-5));
+}
+
+
+
+TEST(Constructor, Multiply) // Checking multiplier
+{
+	Number num1;
+	num1.SetByLong(12);
+	ASSERT_EQ(120, num1.Multiplication());
+	num1.SetByLong(0);
+	ASSERT_EQ(0, num1.Multiplication());
+	num1.SetByLong(20);
+	ASSERT_EQ(200, num1.Multiplication());
+	num1.SetByLong(-20);
+	ASSERT_EQ(-200, num1.Multiplication());
 }
