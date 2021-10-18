@@ -2,14 +2,14 @@
 
 #include <iostream>
 #include "C:\Users\Vulki\Desktop\Lab3oop\Libfor3lab\Number.h"
-
+#include "Input.h"
 using namespace Prog3;
 
 int main(){
 
     int choice = -1;
-	char number[10]; // Сами цифры в числе.
-	long initnumber; // Число не чаром
+	char number[10]; 
+	long initnumber; 
 	long operationnumber;
 	Number num1;
 	int result;
@@ -26,8 +26,8 @@ int main(){
 			num1.SetByLong(initnumber);
 			break;
 		case 2:
-			std::cout << "Enter char number" << std::endl; // 
-			std::cin >> number; // Добавить проверку, что до 7 символов. (Включая знак).
+			std::cout << "Enter char number" << std::endl; 
+			std::cin >> number; 
 			num1.SetByChar(number);
 			break;
 		case 3:

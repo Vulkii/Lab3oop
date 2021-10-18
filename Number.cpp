@@ -32,7 +32,7 @@ namespace Prog3 {
 		value[21] = '\0';
 		return *this;
 	}
-	Number& Number::SetByChar(char *ByChar) { // сеттим пр€мой код из чара, перегон€€ его сначала в int, а потом действу€ как в SetByLong
+	Number& Number::SetByChar(char *ByChar) { 
 		int len=strlen(ByChar);
 		int number=0, k = 0;
 		int i = 0;
@@ -87,7 +87,7 @@ namespace Prog3 {
 		}
 		if (array[0] == '1') {
 			Code.Additional[0] = '1';
-			for (int i = 1; i < 21; i++) { // мен€ем цифры кроме знака
+			for (int i = 1; i < 21; i++) { 
 				if (array[i] == '0')
 					Code.Additional[i] = '1';
 				if (array[i] == '1') {
@@ -95,7 +95,7 @@ namespace Prog3 {
 				}
 			}
 			for (int i = 21; i > 0; i--) {
-				if (Code.Additional[i] == '0') { // до первого нул€
+				if (Code.Additional[i] == '0') { 
 					Code.Additional[i] = '1';
 					break;
 				}
@@ -144,7 +144,7 @@ namespace Prog3 {
 		return k;
 	}
 
-	int Number::Addition(long operatnum) { // сумма и разность.
+	int Number::Addition(long operatnum) { // Sum
 		struct AdditionalCodeValue MyCode = {};
 		struct AdditionalCodeValue OperationCode = {};
 		struct AdditionalCodeValue SumCode = {};
