@@ -11,7 +11,7 @@ int main(){
 	char number[10]; 
 	long initnumber; 
 	long operationnumber;
-	Number num1,num2,num3;
+	Number num1,num2;
 	int result;
 	struct AdditionalCodeValue Code = {};
 	do{
@@ -35,7 +35,7 @@ int main(){
 			break;
 		case 4:
 			Code = num1.AdditionalCode();
-			for (int i = 0; i < 22; i++) {
+			for (int i = 0; i < MAXSIZE; i++) {
 				std::cout << Code.Additional[i];
 			}
 			break;

@@ -20,11 +20,11 @@ namespace Prog3 {
 			number = ByLong * (-1);
 		}
 		else value[0] = '0';
-		for (int i = 20; i > 0; i--) {
+		for (int i = MAXSIZE-2; i > 0; i--) {
 			value[i] = (number % 2)+'0';
 			number = number / 2;
 		}
-		value[21] = '\0';
+		value[MAXSIZE-1] = '\0';
 		return *this;
 	}
 	Number& Number::SetByChar(char *ByChar) { 
@@ -54,18 +54,18 @@ namespace Prog3 {
 			number = number + (i * (ByChar[j-1] - '0'));
 			i = i * 10;
 		}
-		for (int i = 20; i > 0; i--) {
+		for (int i = MAXSIZE-2; i > 0; i--) {
 			value[i] = (number % 2) + '0';
 			number = number / 2;
 		}
-		value[21] = '\0';
+		value[MAXSIZE-1] = '\0';
 		return *this;
 	}
 
 	const char *Number::GetChar() {
 		int result = 0;
 		int degree_of_two = 0;
-			for (int i = 20; i > 0; i--) {
+			for (int i = MAXSIZE-2; i > 0; i--) {
 				result = result + ((value[i] - '0') * pow(2, degree_of_two));
 				degree_of_two++;
 			}
@@ -79,20 +79,20 @@ namespace Prog3 {
 	AdditionalCodeValue MakeAdditionalFromStraight(const char* array, struct AdditionalCodeValue Code) {
 
 		if (array[0] == '0') {
-			for (int i = 0; i < 21; i++) {
+			for (int i = 0; i < MAXSIZE-1; i++) {
 				Code.Additional[i] = array[i];
 			}
 		}
 		if (array[0] == '1') {
 			Code.Additional[0] = '1';
-			for (int i = 1; i < 21; i++) { 
+			for (int i = 1; i < MAXSIZE-1; i++) {
 				if (array[i] == '0')
 					Code.Additional[i] = '1';
 				if (array[i] == '1') {
 					Code.Additional[i] = '0';
 				}
 			}
-			for (int i = 21; i > 0; i--) {
+			for (int i = MAXSIZE-1; i > 0; i--) {
 				if (Code.Additional[i] == '0') { 
 					Code.Additional[i] = '1';
 					break;
@@ -102,7 +102,7 @@ namespace Prog3 {
 				}
 			}
 		}
-		Code.Additional[21] = '\0';
+		Code.Additional[MAXSIZE-1] = '\0';
 		return Code;
 	}
 
@@ -113,14 +113,14 @@ namespace Prog3 {
 		int degree_of_two = 0;
 		Code = MakeAdditionalFromStraight(value, Code);
 		if (Code.Additional[0] != '1') {
-			for (int i = 20; i > 0; i--) {
+			for (int i = MAXSIZE-2; i > 0; i--) {
 				result = result + ((Code.Additional[i] - '0') * pow(2, degree_of_two));
 				degree_of_two++;
 			}
 		}
 		else if (Code.Additional[0] == '1') {
 			result = -1;
-			for (int i = 20; i > 0; i--) {
+			for (int i = MAXSIZE-2; i > 0; i--) {
 				if (Code.Additional[i] == '0') {
 					result = result - (1 * pow(2, degree_of_two));
 				}
@@ -146,7 +146,7 @@ namespace Prog3 {
 		struct AdditionalCodeValue MyCode = {};
 		struct AdditionalCodeValue OperationCode = {};
 		struct AdditionalCodeValue SumCode = {};
-		char helper[22];
+		char helper[MAXSIZE];
 		int result = 0;
 		int degree_of_two = 0;
 		int k = 0; // How many '1' "in mind" = how many 1 we need to use.
@@ -159,17 +159,17 @@ namespace Prog3 {
 			number = operatnum * (-1);
 		}
 		else helper[0] = '0';
-		for (int i = 20; i > 0; i--) {
+		for (int i = MAXSIZE-2; i > 0; i--) {
 			helper[i] = (number % 2) + '0';
 			number = number / 2;
 		}
-		helper[21] = '\0';
+		helper[MAXSIZE-1] = '\0';
 		MyCode = MakeAdditionalFromStraight(value, MyCode);
 		OperationCode = MakeAdditionalFromStraight(helper, OperationCode);
 		SumCode = MakeAdditionalFromStraight(value, SumCode);
 
 
-		for (int i = 21; i > -1; i--) {
+		for (int i = MAXSIZE-1; i > -1; i--) {
 			if (MyCode.Additional[i] == '0' && OperationCode.Additional[i] == '0' && k == 0) {
 				SumCode.Additional[i] = '0';
 			}
@@ -198,14 +198,14 @@ namespace Prog3 {
 			}
 		}
 		if (SumCode.Additional[0] != '1') {
-			for (int i = 20; i > 0; i--) {
+			for (int i = MAXSIZE-2; i > 0; i--) {
 				result = result + ((SumCode.Additional[i] - '0') * pow(2, degree_of_two));
 				degree_of_two++;
 			}
 		}
 		else if (SumCode.Additional[0] == '1') {
 			result = -1;
-			for (int i = 20; i > 0; i--) {
+			for (int i = MAXSIZE-2; i > 0; i--) {
 				if (SumCode.Additional[i] == '0') {
 					result = result - (1 * pow(2, degree_of_two));
 				}
@@ -217,28 +217,28 @@ namespace Prog3 {
 
 
 	int Number::Multiplication() {
-		char helper[22];
-		char superhelper[22];
-		char res[22];
+		char helper[MAXSIZE];
+		char superhelper[MAXSIZE];
+		char res[MAXSIZE];
 		int k = 0;
-		for (int i = 0; i < 21; i++) {
+		for (int i = 0; i < MAXSIZE-1; i++) {
 			res[i] = '0';
 			helper[i] = '0';
 			superhelper[i] = '0';
 		}
-		res[21] = '\0';
-		helper[21] = '\0';
-		superhelper[21] = '\0';
+		res[MAXSIZE-1] = '\0';
+		helper[MAXSIZE-1] = '\0';
+		superhelper[MAXSIZE-1] = '\0';
 
 
-		for (int i = 20; i > 3; i--) {
+		for (int i = MAXSIZE-2; i > 3; i--) {
 			helper[i - 1] = value[i];
 			superhelper[i - 3] = value[i];
 		}
-		for (int i = 0; i < 21; i++) {
+		for (int i = 0; i < MAXSIZE-1; i++) {
 			res[i] = '0';
 		}
-		for (int i = 21; i > -1; i--) {
+		for (int i = MAXSIZE-1; i > -1; i--) {
 			if (helper[i] == '0' && superhelper[i] == '0' && k == 0) {
 				res[i] = '0';
 			}
@@ -268,7 +268,7 @@ namespace Prog3 {
 		}
 		int result = 0;
 		int degree_of_two = 0;
-		for (int i = 20; i > 0; i--) {
+		for (int i = MAXSIZE-2; i > 0; i--) {
 			result = result + ((res[i] - '0') * pow(2, degree_of_two));
 			degree_of_two++;
 		}
@@ -281,7 +281,7 @@ namespace Prog3 {
 		int result = 0;
 		int res = 0;
 		int degree_of_two = 0;
-		for (int i = 20; i > 0; i--) {
+		for (int i = MAXSIZE-2; i > 0; i--) {
 			result = result + ((r.value[i] - '0') * pow(2, degree_of_two));
 			degree_of_two++;
 		}

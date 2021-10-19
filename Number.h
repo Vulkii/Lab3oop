@@ -6,27 +6,28 @@
 
 #endif
 
+#define MAXSIZE 22
 
 namespace Prog3 {
 
     struct AdditionalCodeValue {
-        char Additional[22];
+        char Additional[MAXSIZE];
     };
     int CountDigits(long i);
 
     class Number {
     private:
-        char value[22];
+        char value[MAXSIZE];
         
 
 
     public:
         // Constructors
         Number() {
-            for (int i = 0; i < 21; i++) {
+            for (int i = 0; i < MAXSIZE-1; i++) {
                 value[i] = '0';
         }
-            value[21] = '\0';
+            value[MAXSIZE-1] = '\0';
         }; // empty constructor
 
         // Setters
