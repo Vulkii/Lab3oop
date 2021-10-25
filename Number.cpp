@@ -277,7 +277,7 @@ namespace Prog3 {
 		return result;
 	}
 
-	int & Number::operator +(const Number &r){
+	Number & Number::operator +(const Number &r){
 		int result = 0;
 		int res = 0;
 		int degree_of_two = 0;
@@ -288,8 +288,33 @@ namespace Prog3 {
 		if (r.value[0] == '1')
 			result = result * (-1);
 		result=this->Addition(result);
-		return result;
+		Number num3(result);
+		return num3;
 	}
 
+	AdditionalCodeValue & Number::operator ~() {
+		struct AdditionalCodeValue Code = {};
+		int result = 0;
+		int degree_of_two = 0;
+		Code = MakeAdditionalFromStraight(this->value, Code);
+		if (Code.Additional[0] != '1') {
+			for (int i = MAXSIZE - 2; i > 0; i--) {
+				result = result + ((Code.Additional[i] - '0') * pow(2, degree_of_two));
+				degree_of_two++;
+			}
+		}
+		else if (Code.Additional[0] == '1') {
+			result = -1;
+			for (int i = MAXSIZE - 2; i > 0; i--) {
+				if (Code.Additional[i] == '0') {
+					result = result - (1 * pow(2, degree_of_two));
+				}
+				degree_of_two++;
+			}
+		}
+		std::cout << "Additional code for " << result << " is " << std::endl;
+		return Code;
+
+	}
 }
 

@@ -18,6 +18,36 @@ TEST(Constructor, EmptyConstr) // Checking setter by long and by char
 	ASSERT_STRNE("0", num1.GetChar());
 }
 
+TEST(Constructor, LongConstr) // Checking setter by long and by char
+{
+	long dig = 555;
+	char number[10] = {'5','5','5'};
+	Number num1(dig);
+	ASSERT_STREQ("000000000001000101011", num1.GetChar());
+	dig = -52;
+	Number num2(dig);
+	ASSERT_STREQ("100000000000000110100", num2.GetChar());
+	dig = 55555555555;
+	ASSERT_ANY_THROW(Number num3(dig));
+	dig = -1234344123;
+	ASSERT_ANY_THROW(Number num4(dig));
+}
+
+TEST(Constructor, CharConst) // Checking char constructor
+{
+	char number[10] = { '5','5','5' };
+	char negative_num[10] = { '-','5','2' };
+	Number num1(number);
+	ASSERT_STREQ("000000000001000101011", num1.GetChar());
+	Number num2(negative_num);
+	ASSERT_STREQ("100000000000000110100", num2.GetChar());
+	char overflow[10] = { '1','1','1','1','1','1','1','1','1' };
+	ASSERT_ANY_THROW(Number num3(overflow));
+	char neg_overflow[10] = { '-','1','1','1','1','1','1','1','1','1'};
+	ASSERT_ANY_THROW(Number num4(neg_overflow));
+}
+
+
 TEST(Constructor, Setters) // Checking setter by long and by char
 {
 	Number num1;
@@ -51,7 +81,7 @@ TEST(Constructor, Getter) // Checking getter and good setters
 
 
 
-TEST(Constructor, Sum) // Checking sum of two digits
+TEST(Method, Sum) // Checking sum of two digits
 {
 	Number num1;
 	num1.SetByLong(12);
@@ -64,7 +94,7 @@ TEST(Constructor, Sum) // Checking sum of two digits
 
 
 
-TEST(Constructor, Multiply) // Checking multiplier
+TEST(Method, Multiply) // Checking multiplier
 {
 	Number num1;
 	num1.SetByLong(12);
@@ -78,21 +108,20 @@ TEST(Constructor, Multiply) // Checking multiplier
 }
 
 
-TEST(Constructor, OverLoadTest) // Checking overload +
+TEST(Constructor, OverLoadTest) // Checking overload
 {
 	Number num1,num2;
-	int res;
 	num1.SetByLong(0);
 	num2.SetByLong(15);
-	res = num1 + num2;
-	ASSERT_EQ(15, res);
+	Number res = num1 + num2;
+	ASSERT_STREQ("000000000000000001111", res.GetChar());
 	num1.SetByLong(-20);
-	res = num1 + num2;
-	ASSERT_EQ(-5, res);
+	Number res2 = num1 + num2;
+	ASSERT_STREQ("100000000000000000101", res2.GetChar());
 	num1.SetByLong(15);
-	res = num1 + num2;
-	ASSERT_EQ(30, res);
+	Number res3 = num1 + num2;
+	ASSERT_STREQ("000000000000000011110", res3.GetChar());
 	num1.SetByLong(454);
-	res = num1 + num2;
-	ASSERT_EQ(454+15, res);
+	Number res4 = num1 + num2;
+	ASSERT_STREQ("000000000000111010101", res4.GetChar());
 }
