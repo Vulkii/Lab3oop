@@ -277,7 +277,7 @@ namespace Prog3 {
 		return result;
 	}
 
-	Number & Number::operator +(const Number &r){
+	Number operator +(const Number &r,const Number &l){
 		int result = 0;
 		int res = 0;
 		int degree_of_two = 0;
@@ -287,9 +287,14 @@ namespace Prog3 {
 		}
 		if (r.value[0] == '1')
 			result = result * (-1);
-		result=this->Addition(result);
-		Number num3(result);
-		return num3;
+		degree_of_two = 0;
+		for (int i = MAXSIZE - 2; i > 0; i--) {
+			res = res + ((l.value[i] - '0') * pow(2, degree_of_two));
+			degree_of_two++;
+		}
+		if (l.value[0] == '1')
+			res = res * (-1);
+		return Number(result+res);
 	}
 
 	AdditionalCodeValue & Number::operator ~() {

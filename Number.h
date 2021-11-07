@@ -84,10 +84,10 @@ namespace Prog3 {
 
         // Methods
         AdditionalCodeValue AdditionalCode();
-        int Addition(long operatnum); // тильдой
+        int Addition(long operatnum); 
         int Multiplication();
 
-        Number & operator +(const Number &r);
+        friend Number operator +(const Number &r,const Number &l);
         AdditionalCodeValue & operator ~();
 
         // Destructor
